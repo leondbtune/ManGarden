@@ -17,3 +17,9 @@ data class MangaDetailModel(
     val image: String,
     val chapters: List<ChapterModel>,
 )
+
+data class MangaResultModel(
+    val currentPage: Int,
+    val hasNextPage: Boolean,
+    val results: List<MangaModel>,
+)
