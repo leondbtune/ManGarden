@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ManGarden</string>
+    <string name="unknown_release_date">Unknown release date</string>
+    <string name= "unknown_description">Unknown description</string>
+    <string name="navigate_up">Navigate back</string>
+    <string name="search">search</string>
+    <string name="library">library</string>
+    <string name="search_something">search for a manga</string>
+    <string name="manga_detail">Manga Detail</string>
+    <string name="release_date">"release date: "</string>
+    <string name="description">"description: "</string>
+    <string name="genres">"genres: "</string>
+    <string name="add_to_library">add to library</string>
 </resources>
