@@ -1,2 +1,192 @@
 package com.example.mangarden.ui.screens.search
 
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.mangarden.R
+import com.example.mangarden.model.MangaModel
+import com.example.mangarden.ui.theme.ManGardenTheme
+
+@ExperimentalMaterial3Api
+@Composable
+fun SearchScreen(
+    searchVM: SearchVM = viewModel(factory = SearchVM.Factory), modifier: Modifier = Modifier, onMangaClicked: () -> Unit = { }
+) {
+    Column(modifier = modifier) {
+        SearchBar(
+            searchVM = searchVM,
+        )
+        val searchUiState by searchVM.searchUiState.collectAsState()
+        when (searchUiState) {
+            is SearchUiState.Idle -> StartScreen()
+            is SearchUiState.Loading -> LoadingScreen()
+            is SearchUiState.Success -> SearchScreenGrid(mangaList = (searchUiState as SearchUiState.Success).data.results, searchVM = searchVM, onMangaClicked = onMangaClicked )
+            is SearchUiState.Error -> ErrorScreen(error = (searchUiState as SearchUiState.Error).error, onRetry = {  } )
+        }
+    }
+
+
+}
+
+@Composable
+fun SearchScreenGrid(
+    mangaList: List<MangaModel>,
+    searchVM: SearchVM,
+    modifier: Modifier = Modifier,
+    onMangaClicked: () -> Unit
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(300.dp),
+        modifier = modifier,
+        contentPadding = PaddingValues(2.dp)
+    ) {
+
+        items(items = mangaList, key = { manga -> manga.id}) { manga ->
+            MangaCard(manga = manga, searchVM = searchVM, onMangaClicked = onMangaClicked)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MangaCard(
+    manga: MangaModel,
+    searchVM: SearchVM,
+    onMangaClicked: () -> Unit,
+    modifier: Modifier = Modifier
+    .padding(4.dp)
+    .size(width = 300.dp, height = 120.dp), ) {
+    Card(
+       modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        onClick = {
+            Log.d("MangaCard", "Clicked on ${manga.title}")
+            searchVM.onMangaClicked(manga)
+            searchVM.getMangaDetail()
+            onMangaClicked()
+        }
+
+
+    ) {
+        Text(
+            text = manga.title,
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        Text(
+            text = if (manga.releaseDate.toString() == "null") stringResource(id = R.string.unknown_release_date) else manga.releaseDate.toString(),
+            style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = manga.description ?: stringResource(id = R.string.unknown_description),
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBar(modifier: Modifier = Modifier, searchVM: SearchVM) {
+    TextField(
+        value = searchVM.query,
+        onValueChange = {
+            searchVM.onQueryChange(it)
+        },
+
+        label = { Text(stringResource(id = R.string.search)) },
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.onSurface,
+            containerColor = MaterialTheme.colorScheme.surface,
+        ),
+        trailingIcon = {
+            if (searchVM.query.isNotEmpty()) {
+                IconButton(onClick = {
+                    searchVM.search()
+                    searchVM.onQueryChange("")
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search"
+                    )
+
+                }
+            }
+        },
+        modifier = Modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    CircularProgressIndicator(
+        modifier = modifier
+            .padding(100.dp)
+    )
+}
+
+@Composable
+fun StartScreen(modifier: Modifier = Modifier) {
+    Text(stringResource(id = R.string.search_something))
+}
+
+@Composable
+fun ErrorScreen(error: Throwable, onRetry: () -> Unit, modifier: Modifier = Modifier) {
+    Text(error.toString())
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LoadingScreenPreview() {
+    ManGardenTheme {
+        LoadingScreen()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ErrorScreenPreview() {
+    ManGardenTheme {
+        ErrorScreen(error = Throwable("Error"), onRetry = {  } )
+    }
+}
