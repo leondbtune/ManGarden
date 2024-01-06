@@ -17,14 +17,17 @@ interface AppContainer {
  * Implementation for Dependency Injection
  */
 class DefaultAppContainer : AppContainer {
-    private val baseUrl = "consumet-api-one-pi.vercel.app/manga/mangadex/"
+    private val baseUrl = "https://consumet-api-one-pi.vercel.app/manga/mangadex/"
+    val json = Json {
+        ignoreUnknownKeys = true
+    }
 
     /**
      * Retrofit builder to build object using kotlinx.serialization converter
      */
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
 
     /**
