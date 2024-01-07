@@ -25,6 +25,7 @@ import com.example.mangarden.ui.screens.search.SearchVM
  */
 @Composable
 fun MangaDetailSearchScreen(
+    navigateUp: () -> Unit = {},
     searchVM: SearchVM,
     modifier: Modifier = Modifier.testTag("detail_screen_search")
 ) {
@@ -40,7 +41,7 @@ fun MangaDetailSearchScreen(
         }
         is MangaDetailUiState.Success -> {
             val mangaDetail = (mangaDetailUiState as MangaDetailUiState.Success).data
-            DetailScreen(mangaDetail = mangaDetail, searchVM, modifier = modifier)
+            DetailScreen(navigateUp = navigateUp, mangaDetail = mangaDetail, searchVM, modifier = modifier)
         }
         is MangaDetailUiState.Error -> {
             val error = (mangaDetailUiState as MangaDetailUiState.Error).error
@@ -53,13 +54,14 @@ fun MangaDetailSearchScreen(
  * DetailScreen is the screen for the manga detail screen in the search
  */
 @Composable
-fun DetailScreen(mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Modifier) {
+fun DetailScreen(navigateUp: () -> Unit = {}, mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Modifier) {
     Column(modifier = modifier.verticalScroll(
         rememberScrollState()
     ).testTag("detailScreenSearch")
     ) {
         Button(onClick = {
             searchVM.addToLibrary()
+            navigateUp()
         }
         ) {
             Text(text = stringResource(id = R.string.add_to_library))

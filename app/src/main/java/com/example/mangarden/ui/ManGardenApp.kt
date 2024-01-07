@@ -107,6 +107,7 @@ fun ManGardenApp(
 
             composable(route = Screen.MangaSearchDetail.name) {
                 MangaDetailSearchScreen(
+                    navigateUp = { navController.navigateUp() },
                     searchVM = searchVM,
                     modifier = Modifier
                         .fillMaxSize()
@@ -117,6 +118,7 @@ fun ManGardenApp(
 
             composable(route = Screen.MangaLibraryDetail.name) {
                 MangaDetailLibraryScreen(
+                    navigateUp = { navController.navigateUp() },
                     libraryVM = libraryVM,
                     modifier = Modifier
                         .fillMaxSize()

@@ -37,7 +37,7 @@ import com.example.mangarden.ui.theme.ManGardenTheme
 @ExperimentalMaterial3Api
 @Composable
 fun SearchScreen(
-     modifier: Modifier = Modifier, searchVM: SearchVM = viewModel(factory = SearchVM.Factory), onMangaClicked: () -> Unit = { }
+     modifier: Modifier = Modifier, navigateUp: () -> Unit = {}, searchVM: SearchVM = viewModel(factory = SearchVM.Factory), onMangaClicked: () -> Unit = { }
 ) {
     Column(modifier = modifier) {
         SearchBar(

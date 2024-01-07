@@ -36,6 +36,7 @@ import com.example.mangarden.ui.screens.library.MangaDetailLibraryUiState
  */
 @Composable
 fun MangaDetailLibraryScreen(
+    navigateUp: () -> Unit = {},
     libraryVM: LibraryVM,
     modifier: Modifier
 ) {
@@ -50,7 +51,7 @@ fun MangaDetailLibraryScreen(
         }
         is MangaDetailLibraryUiState.Success -> {
             val mangaDetail = (mangaDetailLibraryUiState as MangaDetailLibraryUiState.Success).data
-            LibraryDetailScreen(mangaDetail = mangaDetail, libraryVM, modifier = modifier)
+            LibraryDetailScreen(navigateUp = navigateUp, mangaDetail = mangaDetail, libraryVM, modifier = modifier)
         }
         is MangaDetailLibraryUiState.Error -> {
             val error = (mangaDetailLibraryUiState as MangaDetailLibraryUiState.Error).error
@@ -64,6 +65,7 @@ fun MangaDetailLibraryScreen(
  */
 @Composable
 fun LibraryDetailScreen(
+    navigateUp: () -> Unit = {},
     mangaDetail: MangaDetailModel,
     libraryVM: LibraryVM,
     modifier: Modifier
@@ -72,6 +74,7 @@ fun LibraryDetailScreen(
         Row {
             Button(onClick = {
                 libraryVM.removeFromLibrary(mangaDetail.id)
+                navigateUp()
             }) {
                 Text(text = stringResource(id = R.string.remove_from_library))
 

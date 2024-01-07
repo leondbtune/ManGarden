@@ -22,6 +22,7 @@ import com.example.mangarden.ui.screens.shared.MangaCard
 @Composable
 fun LibraryScreen(
     libraryVM: LibraryVM,
+    navigateUp: () -> Unit = {},
     onMangaClicked: () -> Unit,
     modifier: Modifier
 ) {
