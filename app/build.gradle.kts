@@ -87,6 +87,8 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.navigation:navigation-testing:2.7.6")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0-RC")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
     // coil
     implementation("io.coil-kt:coil-compose:2.5.0")

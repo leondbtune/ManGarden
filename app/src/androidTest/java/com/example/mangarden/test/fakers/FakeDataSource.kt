@@ -1,5 +1,6 @@
 package com.example.mangarden.test.fakers
 
+import com.example.mangarden.data.database.MangaEntity
 import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.model.MangaModel
 import com.example.mangarden.model.MangaResultModel
@@ -51,6 +52,21 @@ object FakeDataSource {
             status = "Status 1",
             releaseDate = 2021,
             chapters = listOf(),
+        ),
+    )
+
+    val databaseEntries = listOf(
+        MangaEntity(
+            id = "1",
+            chaptersRead = 0,
+        ),
+        MangaEntity(
+            id = "2",
+            chaptersRead = 0,
+        ),
+        MangaEntity(
+            id = "3",
+            chaptersRead = 0,
         ),
     )
 
