@@ -110,7 +110,8 @@ fun ManGardenApp(
                     searchVM = searchVM,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding),
+                        .padding(innerPadding)
+                        .testTag("detail_screen_search")
                 )
             }
 
@@ -119,7 +120,8 @@ fun ManGardenApp(
                     libraryVM = libraryVM,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(innerPadding),
+                        .padding(innerPadding)
+                        .testTag("detail_screen_library"),
                 )
             }
 

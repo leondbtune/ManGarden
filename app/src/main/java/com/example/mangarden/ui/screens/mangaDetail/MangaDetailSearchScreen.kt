@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.mangarden.R
@@ -25,7 +26,7 @@ import com.example.mangarden.ui.screens.search.SearchVM
 @Composable
 fun MangaDetailSearchScreen(
     searchVM: SearchVM,
-    modifier: Modifier
+    modifier: Modifier = Modifier.testTag("detail_screen_search")
 ) {
 
     val mangaDetailUiState by searchVM.mangaDetailUiState.collectAsState()
@@ -55,10 +56,12 @@ fun MangaDetailSearchScreen(
 fun DetailScreen(mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Modifier) {
     Column(modifier = modifier.verticalScroll(
         rememberScrollState()
-    )) {
+    ).testTag("detailScreenSearch")
+    ) {
         Button(onClick = {
             searchVM.addToLibrary()
-        }) {
+        }
+        ) {
             Text(text = stringResource(id = R.string.add_to_library))
 
         }
