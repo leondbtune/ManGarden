@@ -79,6 +79,12 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
         }
     }
 
+    fun addToLibrary() {
+        viewModelScope.launch {
+            repository.insertManga(highLightedMangaId)
+        }
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

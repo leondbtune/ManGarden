@@ -33,7 +33,7 @@ fun MangaDetailSearchScreen(
         }
         is MangaDetailUiState.Success -> {
             val mangaDetail = (mangaDetailUiState as MangaDetailUiState.Success).data
-            DetailScreen(mangaDetail = mangaDetail, modifier = modifier)
+            DetailScreen(mangaDetail = mangaDetail, searchVM, modifier = modifier)
         }
         is MangaDetailUiState.Error -> {
             val error = (mangaDetailUiState as MangaDetailUiState.Error).error
@@ -43,11 +43,13 @@ fun MangaDetailSearchScreen(
 }
 
 @Composable
-fun DetailScreen(mangaDetail: MangaDetailModel, modifier: Modifier) {
+fun DetailScreen(mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Modifier) {
     Column(modifier = modifier.verticalScroll(
         rememberScrollState()
     )) {
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            searchVM.addToLibrary()
+        }) {
             Text(text = stringResource(id = R.string.add_to_library))
 
         }
@@ -89,6 +91,11 @@ fun ErrorScreen(error: Throwable, onRetry: () -> Unit = {}, modifier: Modifier =
         modifier = modifier
             .padding(100.dp)
     )
+
+    Button(onClick = { onRetry }) {
+        
+    }
+
 }
 
 
