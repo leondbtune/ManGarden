@@ -1,7 +1,6 @@
 package com.example.mangarden.data
 
 import android.content.Context
-import com.example.mangarden.ManGardenApplication
 import com.example.mangarden.data.database.MangaDatabase
 import com.example.mangarden.network.MangaApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

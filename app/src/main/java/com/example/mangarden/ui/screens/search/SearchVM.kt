@@ -1,7 +1,5 @@
 package com.example.mangarden.ui.screens.search
 
-import android.text.Spannable.Factory
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.mangarden.ManGardenApplication
@@ -41,7 +38,6 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
     val searchUiState: StateFlow<SearchUiState> = _searchUiState.asStateFlow()
 
     var query by mutableStateOf("")
-        private set
 
     fun onQueryChange(query: String) {
         this.query = query
@@ -61,8 +57,7 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
     private val _mangaDetailUiState = MutableStateFlow<MangaDetailUiState>(MangaDetailUiState.Loading)
     val mangaDetailUiState: StateFlow<MangaDetailUiState> = _mangaDetailUiState.asStateFlow()
 
-    var highLightedMangaId by mutableStateOf("")
-        private set
+    private var highLightedMangaId by mutableStateOf("")
 
     fun onMangaClicked(manga: MangaModel) {
         highLightedMangaId = manga.id

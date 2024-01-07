@@ -1,8 +1,5 @@
 package com.example.mangarden.ui.screens.shared
 
-import android.util.Log
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,19 +13,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.mangarden.R
 import com.example.mangarden.model.MangaModel
-import com.example.mangarden.ui.screens.search.MangaDetailUiState
-import com.example.mangarden.ui.screens.search.SearchVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaCard(
     manga: MangaModel,
     onMangaClicked: () -> Unit,
-    modifier: Modifier = Modifier
-        .padding(4.dp)
-        .size(width = 300.dp, height = 120.dp), ) {
+    modifier: Modifier = Modifier, ) {
     Card(
-        modifier = modifier.testTag("${manga.title}"),
+        modifier = modifier.testTag(manga.title),
         shape = MaterialTheme.shapes.medium,
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         onClick = {

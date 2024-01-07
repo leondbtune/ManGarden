@@ -75,7 +75,7 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun ManGardenTheme(
   useDarkTheme: Boolean = isSystemInDarkTheme(),
-  content: @Composable() () -> Unit
+  content: @Composable () -> Unit
 ) {
   val colors = if (!useDarkTheme) {
     LightColors
@@ -85,6 +85,7 @@ fun ManGardenTheme(
 
   MaterialTheme(
     colorScheme = colors,
-    content = content
+    content = content,
+      typography = Typography,
   )
 }

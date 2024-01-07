@@ -13,10 +13,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.mangarden.ManGardenApplication
 import com.example.mangarden.data.MangaRepository
-import com.example.mangarden.model.ChapterModel
 import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.model.MangaModel
-import com.example.mangarden.ui.screens.search.MangaDetailUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -97,7 +95,7 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
         }
     }
 
-    fun updateChaptersRead() {
+    private fun updateChaptersRead() {
         viewModelScope.launch { repository.updateManga(highLightedMangaId, chaptersRead)  }
     }
 

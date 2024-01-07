@@ -12,9 +12,6 @@
     <string name="genres">"genres: "</string>
     <string name="add_to_library">add to library</string>
     <string name="remove_from_library">remove from library</string>
-    <string name="chapterNumber">"chapter number: "</string>
-    <string name="chapter_number">"chapter number: "</string>
-    <string name="pages_amount">"pages: "</string>
     <string name="reverse_chapter_order">reverse chapter order</string>
     <string name="search_bar">search bar</string>
     <string name="search_button">search button</string>

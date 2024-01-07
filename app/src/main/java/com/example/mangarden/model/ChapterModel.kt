@@ -11,6 +11,3 @@ data class ChapterModel(
     val pages: Int = 0,
 )
 
-data class ChapterDetailModel(
-    val pages: List<PageModel>
-)

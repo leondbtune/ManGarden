@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.model.MangaModel
-import com.example.mangarden.ui.screens.search.SearchVM
 import com.example.mangarden.ui.screens.shared.MangaCard
 
 @Composable
@@ -89,7 +88,7 @@ fun ErrorScreen(error: Throwable, modifier: Modifier) {
 }
 
 fun mangaDetailModelToMangaModel(mutableList: List<MangaDetailModel>) : List<MangaModel> {
-    var resultList = mutableList.map {
+    val resultList = mutableList.map {
         MangaModel(
             id = it.id,
             title = it.title,

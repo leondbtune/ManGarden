@@ -1,16 +1,12 @@
 package com.example.mangarden.ui.screens.mangaDetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.CheckCircle
@@ -82,7 +78,7 @@ fun LibraryDetailScreen(
             text = mangaDetail.title,
             style = MaterialTheme.typography.headlineLarge,
             )
-        LazyColumn() {
+        LazyColumn {
             items(items = mangaDetail.chapters, key = { chapter -> chapter.id }) { chapter ->
                 ChapterCard(
                     chapterModel = chapter,

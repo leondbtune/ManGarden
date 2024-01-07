@@ -86,14 +86,14 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ErrorScreen(error: Throwable, onRetry: () -> Unit = {}, modifier: Modifier = Modifier) {
+fun ErrorScreen(error: Throwable , modifier: Modifier = Modifier, onRetry: () -> Unit = {}) {
     Text(error.toString(),
         modifier = modifier
             .padding(100.dp)
     )
 
     Button(onClick = { onRetry }) {
-        
+
     }
 
 }

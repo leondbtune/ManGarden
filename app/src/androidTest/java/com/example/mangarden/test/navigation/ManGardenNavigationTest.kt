@@ -10,13 +10,12 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.mangarden.ui.ManGardenApp
-import com.example.mangarden.ui.Screen
 import com.example.mangarden.R
 import com.example.mangarden.test.fakers.FakeRepository
+import com.example.mangarden.ui.ManGardenApp
+import com.example.mangarden.ui.Screen
 import com.example.mangarden.ui.screens.library.LibraryVM
 import com.example.mangarden.ui.screens.search.SearchVM
-import junit.framework.TestCase.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

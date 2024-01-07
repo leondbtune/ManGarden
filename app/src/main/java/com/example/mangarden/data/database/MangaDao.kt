@@ -1,10 +1,8 @@
 package com.example.mangarden.data.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
 
 @Dao
 interface MangaDao {
@@ -21,5 +19,5 @@ interface MangaDao {
     suspend fun getMangaList(): List<MangaEntity>
 
     @Query("SELECT chaptersRead FROM manga WHERE id = :highLightedMangaId")
-    abstract fun getChaptersRead(highLightedMangaId: String): Int
+    fun getChaptersRead(highLightedMangaId: String): Int
 }

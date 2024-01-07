@@ -1,7 +1,6 @@
 package com.example.mangarden.data
 
 import com.example.mangarden.data.database.MangaDao
-import com.example.mangarden.data.database.MangaDatabase
 import com.example.mangarden.data.database.MangaEntity
 import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.model.MangaResultModel
@@ -14,7 +13,7 @@ interface MangaRepository {
     suspend fun insertManga(mangaId: String, chaptersRead: Int = 0)
     suspend fun deleteManga(mangaId: String)
     suspend fun updateManga(mangaId: String, chaptersRead: Int)
-    abstract fun getChaptersRead(highLightedMangaId: String): Int
+    fun getChaptersRead(highLightedMangaId: String): Int
 }
 
 class NetworkMangaRepository(
