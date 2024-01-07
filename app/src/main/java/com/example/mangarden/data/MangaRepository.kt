@@ -12,7 +12,9 @@ interface MangaRepository {
     suspend fun getMangaDetail(mangaId: String): MangaDetailModel
     suspend fun getMangaListFromDatabase(): List<MangaDetailModel>
     suspend fun insertManga(mangaId: String, chaptersRead: Int = 0)
+    suspend fun deleteManga(mangaId: String)
     suspend fun updateManga(mangaId: String, chaptersRead: Int)
+    abstract fun getChaptersRead(highLightedMangaId: String): Int
 }
 
 class NetworkMangaRepository(
@@ -32,8 +34,16 @@ class NetworkMangaRepository(
         database.insertManga(MangaEntity(mangaId, chaptersRead))
     }
 
+    override suspend fun deleteManga(mangaId: String) {
+        database.deleteManga(mangaId)
+    }
+
+    override fun getChaptersRead(highLightedMangaId: String): Int {
+        return database.getChaptersRead(highLightedMangaId)
+    }
+
     override suspend fun updateManga(mangaId: String, chaptersRead: Int) {
-        TODO("Not yet implemented")
+        database.updateManga(mangaId, chaptersRead)
     }
 
 

@@ -23,6 +23,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     private val baseUrl = "https://consumet-api-one-pi.vercel.app/manga/mangadex/"
     val json = Json {
         ignoreUnknownKeys = true
+        coerceInputValues = true
     }
 
     /**

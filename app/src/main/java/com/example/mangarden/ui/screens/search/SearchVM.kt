@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.mangarden.ManGardenApplication
@@ -63,7 +64,6 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
     var highLightedMangaId by mutableStateOf("")
         private set
 
-
     fun onMangaClicked(manga: MangaModel) {
         highLightedMangaId = manga.id
     }
@@ -78,6 +78,9 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
             }
         }
     }
+
+    //
+
 
     fun addToLibrary() {
         viewModelScope.launch {

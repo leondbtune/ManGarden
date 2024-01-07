@@ -41,6 +41,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.mangarden.R
 import com.example.mangarden.model.MangaModel
+import com.example.mangarden.ui.screens.shared.MangaCard
 import com.example.mangarden.ui.theme.ManGardenTheme
 
 @ExperimentalMaterial3Api
@@ -78,51 +79,18 @@ fun SearchScreenGrid(
     ) {
 
         items(items = mangaList, key = { manga -> manga.id}) { manga ->
-            MangaCard(manga = manga, searchVM = searchVM, onMangaClicked = onMangaClicked)
+            MangaCard(manga = manga,
+                onMangaClicked = {
+                    searchVM.onMangaClicked(manga)
+                    searchVM.getMangaDetail()
+                    onMangaClicked()
+                }
+            )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MangaCard(
-    manga: MangaModel,
-    searchVM: SearchVM,
-    onMangaClicked: () -> Unit,
-    modifier: Modifier = Modifier
-    .padding(4.dp)
-    .size(width = 300.dp, height = 120.dp), ) {
-    Card(
-       modifier = modifier,
-        shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        onClick = {
-            Log.d("MangaCard", "Clicked on ${manga.title}")
-            searchVM.onMangaClicked(manga)
-            searchVM.getMangaDetail()
-            onMangaClicked()
-        }
 
-
-    ) {
-        Text(
-            text = manga.title,
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.onSurface,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text(
-            text = if (manga.releaseDate.toString() == "null") stringResource(id = R.string.unknown_release_date) else manga.releaseDate.toString(),
-            style = MaterialTheme.typography.bodyLarge)
-        Text(
-            text = manga.description ?: stringResource(id = R.string.unknown_description),
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 3,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

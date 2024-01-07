@@ -8,10 +8,10 @@ data class MangaModel(
     val title: String,
     val description: String? = "",
     val status: String? = "",
-    val releaseDate: Int?,
-    val contentRating: String?,
-    val lastVolume: String?,
-    val lastChapter: String?,
+    val releaseDate: Int? = 0,
+    val contentRating: String? = "",
+    val lastVolume: String? = "",
+    val lastChapter: String? = "",
 )
 
 @Serializable

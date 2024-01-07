@@ -5,8 +5,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ChapterModel(
     val id: String,
-    val title: String,
-    val releaseDate: String = "",
+    val title: String = "",
+    val chapterNumber: String = "",
+    val volumeNumber: String  = "",
+    val pages: Int = 0,
 )
 
 data class ChapterDetailModel(

@@ -1,8 +1,102 @@
 package com.example.mangarden.ui.screens.library
 
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.mangarden.model.MangaDetailModel
+import com.example.mangarden.model.MangaModel
+import com.example.mangarden.ui.screens.search.SearchVM
+import com.example.mangarden.ui.screens.shared.MangaCard
 
 @Composable
-fun LibraryScreen() {
+fun LibraryScreen(
+    libraryVM: LibraryVM,
+    onMangaClicked: () -> Unit,
+    modifier: Modifier
+) {
+    val libraryUiState by libraryVM.libraryUiState.collectAsState()
 
+    when (libraryUiState) {
+        is LibraryUiState.Idle -> {
+            StartScreen()
+        }
+        is LibraryUiState.Loading -> {
+            LoadingScreen(modifier = modifier)
+        }
+        is LibraryUiState.Success -> {
+            val mangaList = (libraryUiState as LibraryUiState.Success).data
+            LibraryScreenGrid(mangaList = mangaList, onMangaClicked = onMangaClicked, libraryVM = libraryVM, modifier = modifier)
+        }
+        is LibraryUiState.Error -> {
+            val error = (libraryUiState as LibraryUiState.Error).error
+            ErrorScreen(error = error, modifier = modifier)
+        }
+    }
+}
+
+@Composable
+fun LibraryScreenGrid(
+    mangaList: List<MangaDetailModel>,
+    onMangaClicked: () -> Unit,
+    libraryVM: LibraryVM,
+    modifier: Modifier = Modifier
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(300.dp),
+        modifier = modifier,
+        contentPadding = PaddingValues(2.dp)
+    ) {
+
+        items(
+            items = mangaDetailModelToMangaModel(mangaList),
+            key = { manga -> manga.id }) { manga ->
+            MangaCard(manga = manga,
+                onMangaClicked = {
+                    libraryVM.onMangaClicked(manga)
+                    libraryVM.getMangaDetail()
+                    onMangaClicked()
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun StartScreen() {
+
+}
+
+@Composable
+fun LoadingScreen(modifier: Modifier) {
+    CircularProgressIndicator(
+        modifier = modifier
+            .padding(100.dp)
+    )
+}
+
+@Composable
+fun ErrorScreen(error: Throwable, modifier: Modifier) {
+    Text(text = error.message ?: "Error", modifier = modifier)
+}
+
+fun mangaDetailModelToMangaModel(mutableList: List<MangaDetailModel>) : List<MangaModel> {
+    var resultList = mutableList.map {
+        MangaModel(
+            id = it.id,
+            title = it.title,
+            description = it.description.en,
+            status = it.status,
+            releaseDate = it.releaseDate,
+        )
+    }
+    return resultList
 }

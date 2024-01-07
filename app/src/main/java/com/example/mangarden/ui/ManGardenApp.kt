@@ -1,5 +1,6 @@
 package com.example.mangarden.ui
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mangarden.R
 import com.example.mangarden.ui.navigation.BottomBar
+import com.example.mangarden.ui.screens.library.LibraryScreen
+import com.example.mangarden.ui.screens.library.LibraryVM
+import com.example.mangarden.ui.screens.mangaDetail.MangaDetailLibraryScreen
 import com.example.mangarden.ui.screens.mangaDetail.MangaDetailSearchScreen
 import com.example.mangarden.ui.screens.search.SearchScreen
 import com.example.mangarden.ui.screens.search.SearchUiState
@@ -35,7 +39,8 @@ import com.example.mangarden.ui.screens.search.SearchVM
 enum class Screen(@StringRes val title: Int) {
     Search(R.string.search),
     Library(R.string.library),
-    MangaSearchDetail(R.string.manga_detail)
+    MangaSearchDetail(R.string.manga_detail),
+    MangaLibraryDetail(R.string.manga_detail)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +52,7 @@ fun ManGardenApp() {
         backStackEntry?.destination?.route ?: Screen.Search.name
     )
     val searchVM: SearchVM = viewModel(factory = SearchVM.Factory)
-
+    val libraryVM: LibraryVM = viewModel(factory = LibraryVM.Factory)
     Scaffold(
         modifier = Modifier,
         topBar = {
@@ -76,20 +81,37 @@ fun ManGardenApp() {
                         navController.navigate(Screen.MangaSearchDetail.name)
                     },
                     modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding))
+                        .fillMaxSize()
+                        .padding(innerPadding))
             }
 
             composable(route = Screen.Library.name) {
-                Text(text = "Library")
+                libraryVM.getMangaListFromDatabase()
+                LibraryScreen(
+                    libraryVM = libraryVM,
+                    onMangaClicked = {
+                        navController.navigate(Screen.MangaLibraryDetail.name)
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding))
             }
 
             composable(route = Screen.MangaSearchDetail.name) {
                 MangaDetailSearchScreen(
                     searchVM = searchVM,
                     modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                )
+            }
+
+            composable(route = Screen.MangaLibraryDetail.name) {
+                MangaDetailLibraryScreen(
+                    libraryVM = libraryVM,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                 )
             }
 
