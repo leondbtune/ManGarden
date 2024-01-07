@@ -5,10 +5,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
 
+/**
+* Database for manga
+ */
 @Database(entities = [MangaEntity::class], version = 1, exportSchema = false)
 abstract class MangaDatabase: RoomDatabase() {
     abstract fun mangaDao(): MangaDao
 
+    /**
+    * Singleton for database
+     */
     companion object {
         @Volatile
         private var INSTANCE: MangaDatabase? = null

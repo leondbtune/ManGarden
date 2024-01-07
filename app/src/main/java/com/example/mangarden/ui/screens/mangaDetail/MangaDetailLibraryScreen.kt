@@ -31,6 +31,9 @@ import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.ui.screens.library.LibraryVM
 import com.example.mangarden.ui.screens.library.MangaDetailLibraryUiState
 
+/**
+ * MangaDetailLibraryScreen is the screen for the manga detail screen in the library
+ */
 @Composable
 fun MangaDetailLibraryScreen(
     libraryVM: LibraryVM,
@@ -38,6 +41,9 @@ fun MangaDetailLibraryScreen(
 ) {
     val mangaDetailLibraryUiState by libraryVM.mangaDetailLibraryUiState.collectAsState()
 
+    /**
+     * show different screen based on the state
+     */
     when (mangaDetailLibraryUiState) {
         is MangaDetailLibraryUiState.Loading -> {
             LoadingScreen(modifier = modifier)
@@ -53,6 +59,9 @@ fun MangaDetailLibraryScreen(
     }
 }
 
+/**
+ * LibraryDetailScreen is the screen for the manga detail screen in the library
+ */
 @Composable
 fun LibraryDetailScreen(
     mangaDetail: MangaDetailModel,
@@ -96,6 +105,9 @@ fun LibraryDetailScreen(
 
 }
 
+/**
+ * ChapterCard is the card for the chapter
+ */
 @Composable
 fun ChapterCard(chapterModel: ChapterModel, isRead: Boolean, onReadClick: () -> Unit, onUnreadClick: () -> Unit, modifier: Modifier = Modifier) {
     Card(

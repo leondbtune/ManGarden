@@ -2,6 +2,9 @@ package com.example.mangarden.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Model for chapters
+ */
 @Serializable
 data class ChapterModel(
     val id: String,

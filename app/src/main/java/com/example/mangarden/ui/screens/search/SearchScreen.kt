@@ -31,6 +31,9 @@ import com.example.mangarden.model.MangaModel
 import com.example.mangarden.ui.screens.shared.MangaCard
 import com.example.mangarden.ui.theme.ManGardenTheme
 
+/**
+ * SearchScreen is one of the main screens of the app.
+ */
 @ExperimentalMaterial3Api
 @Composable
 fun SearchScreen(
@@ -40,6 +43,10 @@ fun SearchScreen(
         SearchBar(
             searchVM = searchVM,
         )
+
+        /**
+         * show different screen based on the state
+         */
         val searchUiState by searchVM.searchUiState.collectAsState()
         when (searchUiState) {
             is SearchUiState.Idle -> StartScreen()
@@ -52,6 +59,9 @@ fun SearchScreen(
 
 }
 
+/**
+ * SearchScreenGrid is the grid of manga cards
+ */
 @Composable
 fun SearchScreenGrid(
     mangaList: List<MangaModel>,
@@ -78,7 +88,9 @@ fun SearchScreenGrid(
 }
 
 
-
+/**
+ * SearchBar is the search bar in search screen
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(modifier: Modifier = Modifier, searchVM: SearchVM) {
@@ -117,6 +129,9 @@ fun SearchBar(modifier: Modifier = Modifier, searchVM: SearchVM) {
     )
 }
 
+/**
+ * Loading screen
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
@@ -125,11 +140,17 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * Start screen
+ */
 @Composable
 fun StartScreen(modifier: Modifier = Modifier) {
     Text(stringResource(id = R.string.search_something))
 }
 
+/**
+ * Error screen
+ */
 @Composable
 fun ErrorScreen(error: Throwable, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Text(error.toString())

@@ -5,6 +5,9 @@ import com.example.mangarden.model.MangaResultModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/**
+ * Interface for manga api service
+ */
 interface MangaApiService {
     @GET("{query}")
     suspend fun getMangaList(@Path("query") query: String): MangaResultModel

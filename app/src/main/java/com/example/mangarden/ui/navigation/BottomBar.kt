@@ -15,10 +15,19 @@ import com.example.mangarden.R
 import com.example.mangarden.ui.Screen
 
 
+/**
+ * Bottom bar for navigation
+ */
 @Composable
 fun BottomBar(onNavigate: (String) -> Unit, currentPage: Screen) {
+    /**
+     * Get current item from navigation bar
+     */
     val currentItem =  currentPage.name
 
+    /**
+     * Navigation bar
+     */
     NavigationBar {
         NavigationBarItem(
             selected = currentItem == Screen.Search.name,

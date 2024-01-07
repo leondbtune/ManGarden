@@ -32,6 +32,9 @@ import com.example.mangarden.ui.screens.mangaDetail.MangaDetailSearchScreen
 import com.example.mangarden.ui.screens.search.SearchScreen
 import com.example.mangarden.ui.screens.search.SearchVM
 
+/**
+ * Screen is an enum class that represents the different screens of the app.
+ */
 enum class Screen(@StringRes val title: Int) {
     Search(R.string.search),
     Library(R.string.library),
@@ -39,6 +42,9 @@ enum class Screen(@StringRes val title: Int) {
     MangaLibraryDetail(R.string.manga_detail)
 }
 
+/**
+ * ManGardenApp is the main entry point of the app.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManGardenApp(
@@ -69,6 +75,9 @@ fun ManGardenApp(
         }
     ) { innerPadding ->
 
+        /**
+         * NavHost is the navigation component of the app.
+         */
         NavHost(
             navController = navController,
             startDestination = Screen.Search.name,
@@ -121,6 +130,9 @@ fun ManGardenApp(
 
 }
 
+/**
+ * ManGardenTopBar is the top bar of the app.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ManGardenTopBar(

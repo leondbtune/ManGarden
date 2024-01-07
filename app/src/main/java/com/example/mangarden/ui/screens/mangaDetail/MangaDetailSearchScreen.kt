@@ -19,6 +19,9 @@ import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.ui.screens.search.MangaDetailUiState
 import com.example.mangarden.ui.screens.search.SearchVM
 
+/**
+ * MangaDetailSearchScreen is the screen for the manga detail screen in the search
+ */
 @Composable
 fun MangaDetailSearchScreen(
     searchVM: SearchVM,
@@ -27,6 +30,9 @@ fun MangaDetailSearchScreen(
 
     val mangaDetailUiState by searchVM.mangaDetailUiState.collectAsState()
 
+    /**
+     * show different screen based on the state
+     */
     when (mangaDetailUiState) {
         is MangaDetailUiState.Loading -> {
             LoadingScreen(modifier = modifier)
@@ -42,6 +48,9 @@ fun MangaDetailSearchScreen(
     }
 }
 
+/**
+ * DetailScreen is the screen for the manga detail screen in the search
+ */
 @Composable
 fun DetailScreen(mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Modifier) {
     Column(modifier = modifier.verticalScroll(
@@ -76,7 +85,9 @@ fun DetailScreen(mangaDetail: MangaDetailModel, searchVM: SearchVM, modifier: Mo
     }
 }
 
-
+/**
+ * LoadingScreen is the loading screen
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     CircularProgressIndicator(
@@ -85,6 +96,9 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * ErrorScreen is the error screen
+ */
 @Composable
 fun ErrorScreen(error: Throwable , modifier: Modifier = Modifier, onRetry: () -> Unit = {}) {
     Text(error.toString(),

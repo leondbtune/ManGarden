@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import com.example.mangarden.ui.ManGardenApp
 import com.example.mangarden.ui.theme.ManGardenTheme
 
+/**
+ * MainActivity is the main activity of the app.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

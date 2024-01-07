@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * UiState for the library screen
+ */
 sealed interface LibraryUiState {
     object Idle : LibraryUiState
     object Loading : LibraryUiState
@@ -27,16 +30,26 @@ sealed interface LibraryUiState {
     data class Error(val error: Throwable) : LibraryUiState
 }
 
+
+/**
+ * UiState for the manga detail screen
+ */
 sealed interface MangaDetailLibraryUiState {
     object Loading : MangaDetailLibraryUiState
     data class Success(val data: MangaDetailModel) : MangaDetailLibraryUiState
     data class Error(val error: Throwable) : MangaDetailLibraryUiState
 }
 
+/**
+ * LibraryVM is the ViewModel for the library screen and manga detail screen
+ */
 class LibraryVM(private val repository: MangaRepository): ViewModel() {
     private val _libraryUiState = MutableStateFlow<LibraryUiState>(LibraryUiState.Idle)
     val libraryUiState: MutableStateFlow<LibraryUiState> = _libraryUiState
 
+    /**
+     * getMangaListFromDatabase gets the manga list from the database
+     */
     fun getMangaListFromDatabase() {
         viewModelScope.launch {
             _libraryUiState.value = LibraryUiState.Loading
@@ -51,9 +64,14 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
     private val _mangaDetailLibraryUiState = MutableStateFlow<MangaDetailLibraryUiState>(MangaDetailLibraryUiState.Loading)
     val mangaDetailLibraryUiState: StateFlow<MangaDetailLibraryUiState> = _mangaDetailLibraryUiState.asStateFlow()
 
+    /**
+     * highLightedMangaId is the id of the manga that is highlighted, used for the detail screen
+     */
     private var highLightedMangaId by mutableStateOf("")
 
-
+    /**
+     * reverseChapterList reverses the chapter list
+     */
     fun reverseChapterList() {
         val mangaDetail = (_mangaDetailLibraryUiState.value as MangaDetailLibraryUiState.Success).data
         val reversedChapterList = mangaDetail.chapters.reversed()
@@ -69,11 +87,17 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
         _mangaDetailLibraryUiState.value = MangaDetailLibraryUiState.Success(reversedMangaDetail)
     }
 
+    /**
+     * onMangaClicked is called when a mangaCard is clicked
+     */
     fun onMangaClicked(manga: MangaModel) {
         highLightedMangaId = manga.id
         updateChaptersRead()
     }
 
+    /**
+     * getMangaDetail gets the manga detail from the database
+     */
     fun getMangaDetail() {
         viewModelScope.launch {
             _mangaDetailLibraryUiState.value = MangaDetailLibraryUiState.Loading
@@ -88,17 +112,25 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
 
     var chaptersRead by mutableIntStateOf(0)
 
-
+    /**
+     * repository call to delete manga from library
+     */
     fun removeFromLibrary(id: String) {
         viewModelScope.launch {
             repository.deleteManga(id)
         }
     }
 
+    /**
+     * updateChaptersRead updates the chapters read in the database
+     */
     private fun updateChaptersRead() {
         viewModelScope.launch { repository.updateManga(highLightedMangaId, chaptersRead)  }
     }
 
+    /**
+     * addChapterRead adds a chapter read to the database
+     */
     fun addChapterRead(chapterRead: Int) {
             chaptersRead = chapterRead
             viewModelScope.launch {
@@ -106,6 +138,9 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
             }
     }
 
+    /**
+     * factory for the libraryVM
+     */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

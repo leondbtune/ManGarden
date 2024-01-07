@@ -19,6 +19,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * UiState for the search screen
+ */
 sealed interface SearchUiState {
     object Idle : SearchUiState
     object Loading : SearchUiState
@@ -26,12 +29,18 @@ sealed interface SearchUiState {
     data class Error(val error: Throwable) : SearchUiState
 }
 
+/**
+ * UiState for the manga detail screen
+ */
 sealed interface MangaDetailUiState {
     object Loading : MangaDetailUiState
     data class Success(val data: MangaDetailModel) : MangaDetailUiState
     data class Error(val error: Throwable) : MangaDetailUiState
 }
 
+/**
+ * SearchVM is the ViewModel for the search screen and manga detail screen
+ */
 class SearchVM(private val repository: MangaRepository) : ViewModel() {
 
     private val _searchUiState = MutableStateFlow<SearchUiState>(SearchUiState.Idle)
@@ -39,10 +48,16 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
 
     var query by mutableStateOf("")
 
+    /**
+     * onQueryChange is called when the query is changed in the search bar
+     */
     fun onQueryChange(query: String) {
         this.query = query
     }
 
+    /**
+     * search searches for manga based on the query
+     */
     fun search() {
         viewModelScope.launch {
             _searchUiState.value = SearchUiState.Loading
@@ -59,10 +74,16 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
 
     private var highLightedMangaId by mutableStateOf("")
 
+    /**
+     * onMangaClicked is called when a manga is clicked
+     */
     fun onMangaClicked(manga: MangaModel) {
         highLightedMangaId = manga.id
     }
 
+    /**
+     * getMangaDetail gets the manga detail
+     */
     fun getMangaDetail() {
         viewModelScope.launch {
             _mangaDetailUiState.value = MangaDetailUiState.Loading
@@ -76,13 +97,18 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
 
     //
 
-
+    /**
+     * addToLibrary adds the manga to the database
+     */
     fun addToLibrary() {
         viewModelScope.launch {
             repository.insertManga(highLightedMangaId)
         }
     }
 
+    /**
+     * factory for the ViewModel
+     */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

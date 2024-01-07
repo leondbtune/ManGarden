@@ -16,6 +16,9 @@ import com.example.mangarden.model.MangaDetailModel
 import com.example.mangarden.model.MangaModel
 import com.example.mangarden.ui.screens.shared.MangaCard
 
+/**
+ * LibraryScreen is one of the main screens of the app.
+ */
 @Composable
 fun LibraryScreen(
     libraryVM: LibraryVM,
@@ -24,6 +27,9 @@ fun LibraryScreen(
 ) {
     val libraryUiState by libraryVM.libraryUiState.collectAsState()
 
+    /**
+     * show different screen based on the state
+     */
     when (libraryUiState) {
         is LibraryUiState.Idle -> {
             StartScreen()
@@ -42,6 +48,9 @@ fun LibraryScreen(
     }
 }
 
+/**
+ * LibraryScreenGrid is the grid of manga cards
+ */
 @Composable
 fun LibraryScreenGrid(
     mangaList: List<MangaDetailModel>,
@@ -69,11 +78,17 @@ fun LibraryScreenGrid(
     }
 }
 
+/**
+ * empty start screen
+ */
 @Composable
 fun StartScreen() {
 
 }
 
+/**
+ * loading screen
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier) {
     CircularProgressIndicator(
@@ -82,11 +97,17 @@ fun LoadingScreen(modifier: Modifier) {
     )
 }
 
+/**
+ * error screen
+ */
 @Composable
 fun ErrorScreen(error: Throwable, modifier: Modifier) {
     Text(text = error.message ?: "Error", modifier = modifier)
 }
 
+/**
+ * convert list of mangaDetailModel to list of mangaModel
+ */
 fun mangaDetailModelToMangaModel(mutableList: List<MangaDetailModel>) : List<MangaModel> {
     val resultList = mutableList.map {
         MangaModel(

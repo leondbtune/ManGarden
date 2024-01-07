@@ -14,6 +14,9 @@ import androidx.compose.ui.unit.dp
 import com.example.mangarden.R
 import com.example.mangarden.model.MangaModel
 
+/**
+ * MangaCard is the card for the manga
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MangaCard(

@@ -2,6 +2,9 @@ package com.example.mangarden.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Model for manga
+ */
 @Serializable
 data class MangaModel(
     val id: String,
@@ -14,6 +17,9 @@ data class MangaModel(
     val lastChapter: String? = "",
 )
 
+/**
+ * Model for manga detail
+ */
 @Serializable
 data class MangaDetailModel(
     val id: String,
@@ -26,6 +32,9 @@ data class MangaDetailModel(
 
 )
 
+/**
+ * Model for manga result
+ */
 @Serializable
 data class MangaResultModel(
     val currentPage: Int = 0,
@@ -33,6 +42,9 @@ data class MangaResultModel(
     val results: List<MangaModel>,
 )
 
+/**
+ * Model for description langs as support for manga detail
+ */
 @Serializable
 data class descriptionLangs(
     val en: String,
