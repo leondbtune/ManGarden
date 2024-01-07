@@ -19,9 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -45,21 +47,24 @@ enum class Screen(@StringRes val title: Int) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ManGardenApp() {
-    val navController = rememberNavController()
+fun ManGardenApp(
+    navController: NavHostController = rememberNavController(),
+    searchVM: SearchVM = viewModel(factory = SearchVM.Factory),
+    libraryVM: LibraryVM = viewModel(factory = LibraryVM.Factory),
+) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = Screen.valueOf(
         backStackEntry?.destination?.route ?: Screen.Search.name
     )
-    val searchVM: SearchVM = viewModel(factory = SearchVM.Factory)
-    val libraryVM: LibraryVM = viewModel(factory = LibraryVM.Factory)
+
     Scaffold(
         modifier = Modifier,
         topBar = {
             ManGardenTopBar(
                 title = currentScreen.title,
                 canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
+                navigateUp = { navController.navigateUp() },
+                currentScreen = currentScreen,
             )
         },
         bottomBar = {
@@ -128,6 +133,7 @@ fun ManGardenTopBar(
     @StringRes title: Int,
     canNavigateBack: Boolean = false,
     navigateUp: (() -> Unit),
+    currentScreen: Screen,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -135,8 +141,9 @@ fun ManGardenTopBar(
         title = { Text(stringResource(title)) },
         modifier = modifier,
         navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
+            if (canNavigateBack && currentScreen != Screen.Search && currentScreen != Screen.Library)
+                IconButton(onClick = navigateUp,
+                    modifier = Modifier.testTag("back_button")) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = stringResource(R.string.navigate_up)
@@ -144,6 +151,6 @@ fun ManGardenTopBar(
 
                 }
             }
-        },
-    )
-}
+        )
+
+    }

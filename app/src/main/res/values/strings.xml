@@ -16,4 +16,8 @@
     <string name="chapter_number">"chapter number: "</string>
     <string name="pages_amount">"pages: "</string>
     <string name="reverse_chapter_order">reverse chapter order</string>
+    <string name="search_bar">search bar</string>
+    <string name="search_button">search button</string>
+    <string name="library_bottom_bar">library</string>
+    <string name="search_bottom_bar">search</string>
 </resources>

@@ -8,6 +8,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.example.mangarden.R
 import com.example.mangarden.ui.Screen
@@ -24,10 +26,11 @@ fun BottomBar(onNavigate: (String) -> Unit, currentPage: Screen) {
             icon = {
                 Icon(
                     imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
+                    contentDescription = stringResource(id = R.string.search_bottom_bar)
                 )
             },
-            label = { Text(stringResource(id = R.string.search)) }
+            label = { Text(stringResource(id = R.string.search_bottom_bar)) },
+            modifier = Modifier.testTag("search_bottom_bar")
         )
         NavigationBarItem(
             selected = currentItem == Screen.Library.name,
@@ -35,10 +38,11 @@ fun BottomBar(onNavigate: (String) -> Unit, currentPage: Screen) {
             icon = {
                 Icon(
                     imageVector = Icons.Default.List,
-                    contentDescription = "Library"
+                    contentDescription = stringResource(id = R.string.library_bottom_bar)
                 )
             },
-            label = { Text(stringResource(id = R.string.library)) }
+            label = { Text(stringResource(id = R.string.library_bottom_bar)) },
+            modifier = Modifier.testTag("library_bottom_bar")
         )
     }
 }
