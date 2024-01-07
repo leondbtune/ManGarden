@@ -72,7 +72,7 @@ class SearchVM(private val repository: MangaRepository) : ViewModel() {
     private val _mangaDetailUiState = MutableStateFlow<MangaDetailUiState>(MangaDetailUiState.Loading)
     val mangaDetailUiState: StateFlow<MangaDetailUiState> = _mangaDetailUiState.asStateFlow()
 
-    private var highLightedMangaId by mutableStateOf("")
+    var highLightedMangaId by mutableStateOf("")
 
     /**
      * onMangaClicked is called when a manga is clicked

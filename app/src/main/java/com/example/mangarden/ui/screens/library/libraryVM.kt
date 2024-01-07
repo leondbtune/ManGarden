@@ -67,7 +67,7 @@ class LibraryVM(private val repository: MangaRepository): ViewModel() {
     /**
      * highLightedMangaId is the id of the manga that is highlighted, used for the detail screen
      */
-    private var highLightedMangaId by mutableStateOf("")
+    var highLightedMangaId by mutableStateOf("")
 
     /**
      * reverseChapterList reverses the chapter list
